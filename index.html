@@ -166,7 +166,7 @@
       font-style: italic;
     }
 
-    .hero {
+    /*.hero {
       background-image: url(IMG-20250226-WA0008.jpg);
       height: 350px;
       display: flex;
@@ -177,7 +177,69 @@
       font-family: 'Playfair Display', serif;
       font-size: 2.5rem;
       animation: fadeIn 2s ease-in;
-    }
+    }*/
+
+    .hero-carousel {
+  position: relative;
+  height: 350px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.hero-slides {
+  display: flex;
+  width: 300%;
+  height: 100%;
+  transition: transform 0.6s ease-in-out;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide-text {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 2.2rem;
+  font-family: 'Playfair Display', serif;
+  text-shadow: 2px 2px 8px black;
+  text-align: center;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.carousel-dots span {
+  width: 12px;
+  height: 12px;
+  background-color: #ccc;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.carousel-dots span.active {
+  background-color: gold;
+}
+
 
     nav {
       background-color: #d3b489;
@@ -317,6 +379,25 @@
         transform: translateY(0);
       }
     }
+    .hero-section {
+  background-image: url('your-image.jpg');  /* Replace with your image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+/* Mobile View Fix */
+@media (max-width: 768px) {
+  .hero-section {
+    background-size: contain;   /* Show full image */
+    background-position: center top;
+    height: auto;
+    padding-top: 60px;  /* optional, adds space */
+  }
+}
+
+
   </style>
 </head>
 
@@ -355,9 +436,28 @@
     <div class="thankyou">Thank you for visiting Padmini Jewels 💖<br>We’re blessed to have customers like you!</div>
   </div>
 
-  <div class="hero">
-    Elegance that speaks royalty 💎
+  <div class="hero-carousel">
+  <div class="hero-slides" id="heroSlides">
+    <div class="slide">
+      <img src="" alt="Slide 1">
+      <div class="slide-text">Elegance that speaks royalty 💎</div>
+    </div>
+    <div class="slide">
+      <img src="" alt="Slide 2">
+      <div class="slide-text">Grace. Glory. Grandeur.</div>
+    </div>
+    <div class="slide">
+      <img src="" alt="Slide 3">
+      <div class="slide-text">Jewels fit for a Queen 👑</div>
+    </div>
   </div>
+  <div class="carousel-dots" id="carouselDots">
+    <span onclick="changeSlide(0)"></span>
+    <span onclick="changeSlide(1)"></span>
+    <span onclick="changeSlide(2)"></span>
+  </div>
+</div>
+
 
   <nav>
     <a href="#products">Collections</a>
@@ -402,6 +502,33 @@
   <footer class="footer">
     &copy; 2025 Padmini Jewels. Designed with royalty for you 👑
   </footer>
+
+  <script>
+  let currentSlideIndex = 0;
+  const slidesContainer = document.getElementById("heroSlides");
+  const dots = document.querySelectorAll("#carouselDots span");
+  const totalSlides = dots.length;
+
+  function changeSlide(index) {
+    currentSlideIndex = index;
+    slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+    updateActiveDot();
+  }
+
+  function updateActiveDot() {
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[currentSlideIndex].classList.add('active');
+  }
+
+  function autoSlide() {
+    currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+    changeSlide(currentSlideIndex);
+  }
+
+  setInterval(autoSlide, 5000); // Change every 5s
+  changeSlide(0); // Initial display
+</script>
+
 
   <script>
     function openNav() {
